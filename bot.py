@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import datetime
 from google import genai
+import os  # Adicionado para conseguir ler a caixinha secreta do Render!
 
 # 1. CONFIGURAÇÃO DA MENTE DO MONSTRO
 client_ia = genai.Client(api_key="AQ.Ab8RN6JYtKYcBlGLJvkw55IQoNWcnhzJw56iVolROJ11FvXtgQ")
@@ -84,4 +85,6 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-bot.run("MTU1Njc1NDQyOTMwNTI5NDg1OA.GqkOz-.hyxkAJnDVy4GhnWPWut3zz_KbO4f0jyzpsuDiU")
+# EDICAO DE SEGURANÇA: Token removido daqui! O Discord nunca mais vai conseguir nos derrubar!
+token_secreto = os.environ.get("DISCORD_TOKEN")
+bot.run(token_secreto)
