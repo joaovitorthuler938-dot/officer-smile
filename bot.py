@@ -25,7 +25,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 FRASES = {
     "pt-BR": {
         "prisao": "🚨 **SPLASH! O MONSTRO DE TINTA ATACA!** {membro} foi engolido por uma poça de nanquim e ficará preso na masmorra borrada por **{minutos} minutos**!\n**Motivo:** {motivo}. *Não tente limpar a sujeira! HeHeHe!* 🙂 🚨",
-        "erro_cargo": "Hahaha! Minhas poças de tinta não conseguem engolir alguém com um cargo tão alto! Você precisa de mais poder! 🙂",
+        "erro_cargo": "Hahaha! Minhas poças de tinta não conheem engolir alguém com um cargo tão alto! Você precisa de mais poder! 🙂",
         "resistiu": "O suspeito se dissolveu na escuridão e resistiu! 🙂 Erro: {erro}"
     },
     "en-US": {
@@ -75,15 +75,16 @@ async def on_message(message):
         async with message.channel.typing():
             try:
                 prompt = f"{config_personalidade}\nUsuário diz: {message.content}"
-                # CORREÇÃO DE MODELO: Alterado para 'gemini-2.5-flash' para funcionar de primeira na nova biblioteca!
+                # MODELO UNIVERSAL CORRIGIDO: Alterado para 'gemini-2.0-flash' para aceitar a chave nova!
                 response = client_ia.models.generate_content(
-                    model='gemini-2.5-flash',
+                    model='gemini-2.0-flash',
                     contents=prompt,
                 )
                 await message.reply(message.author.mention + " " + response.text)
             except Exception as e:
                 print(f"🚨 ERRO INTERNO DA IA: {e}")
-                await message.reply("🚨 *Glub glub...* Minha mente de tinta engasgou! 🙂")
+                # Coloquei o erro de volta na resposta para garantir que se der ruim de novo a gente veja na hora!
+                await message.reply(f"🚨 *Glub glub...* Minha mente de tinta engasgou! Erro: {e} 🙂")
 
     await bot.process_commands(message)
 
