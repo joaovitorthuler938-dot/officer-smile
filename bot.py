@@ -4,8 +4,9 @@ import datetime
 from google import genai
 import os  # Adicionado para conseguir ler a caixinha secreta do Render!
 
-# 1. CONFIGURAÇÃO DA MENTE DO MONSTRO
-client_ia = genai.Client(api_key="AQ.Ab8RN6JYtKYcBlGLJvkw55IQoNWcnhzJw56iVolROJ11FvXtgQ")
+# 1. CONFIGURAÇÃO DA MENTE DO MONSTRO - EDICAO DE SEGURANÇA: Chave copiada para o Environment do Render!
+# Deixando o Client vazio, a biblioteca lê a variável GEMINI_API_KEY automaticamente em segredo!
+client_ia = genai.Client()
 
 config_personalidade = (
     "Você é o Officer Smile, um monstro de tinta meio maluco, caótico e imprevisível "
@@ -59,7 +60,7 @@ async def castigar(interaction: discord.Interaction, membro: discord.Member, min
     tempo_castigo = datetime.timedelta(minutes=minutos)
     try:
         await membro.timeout(tempo_castigo, reason=motivo)
-        msg = FRASES[lang]["prisao"].format(membro=membro.mention, minutos=minutos, motivo=motivo)
+        msg = FRASES[lang]["prisao"].format(membro=membro.mention, minutes=minutos, motivo=motivo)
         await interaction.response.send_message(msg)
     except Exception as e:
         msg_erro = FRASES[lang]["resistiu"].format(erro=e)
