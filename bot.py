@@ -60,7 +60,7 @@ async def castigar(interaction: discord.Interaction, membro: discord.Member, min
     tempo_castigo = datetime.timedelta(minutes=minutos)
     try:
         await membro.timeout(tempo_castigo, reason=motivo)
-        msg = FRASES[lang]["prisao"].format(membro=membro.mention, minutos=minutos, motivo=motivo)
+        msg = FRASES[lang]["prisao"].format(membro=membro.mention, minutes=minutos, motivo=motivo)
         await interaction.response.send_message(msg)
     except Exception as e:
         msg_erro = FRASES[lang]["resistiu"].format(erro=e)
@@ -75,8 +75,9 @@ async def on_message(message):
         async with message.channel.typing():
             try:
                 prompt = f"{config_personalidade}\nUsuário diz: {message.content}"
+                # CORREÇÃO DE MODELO: Alterado para 'gemini-2.5-flash' para funcionar de primeira na nova biblioteca!
                 response = client_ia.models.generate_content(
-                    model='gemini-3.8-flash',
+                    model='gemini-2.5-flash',
                     contents=prompt,
                 )
                 await message.reply(message.author.mention + " " + response.text)
